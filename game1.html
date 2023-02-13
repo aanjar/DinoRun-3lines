@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style1.css" />
+    <title>Game Dino Run</title>
+  </head>
+  <body onload="setHighScore()">
+    <h2>Dino Run</h2>
+
+    <div id="board" style="background-position: 0px">
+      <div id="area">
+        <div class="over"></div>
+        <h3 class="score">Score : <span id="score">0</span></h3>
+        <h3 class="highest_score">
+          Best score :
+          <span id="highest_scoree"></span>
+        </h3>
+        <div id="dino"></div>
+        <div id="kalah" class="kalah">
+          <div class="kalah2">
+            <p style="font-size: 30px; font-weight: bold; margin-top: -3px; padding: 0px">Game Over</p>
+            <p style="margin-top: -27px">Score anda : <span id="highscore">0</span></p>
+            <a href="game1.html"><div class="reset"></div></a>
+          </div>
+        </div>
+        <div id="box" style="margin-left: 600px"></div>
+        <div id="box1" style="margin-left: 1000px"></div>
+        <div id="box2" style="margin-left: 1600px"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+       var tempat = [
+        {
+          score: 20000,
+          img: "https://"
+        },
+        {
+          score: 30000,
+          img: "https://"
+        }
+      ]; 
+
+      var isMoving = true;
+      function setHighScore() {
+        document.getElementById("highest_scoree").innerHTML = localStorage.getItem("highest_score");
+      }
+
+      function getHighScore() {
+        return 1000;
+      }
+
+      function setBackgroundMoving() {
+        if (isMoving == true) {
+          setTimeout(function () {
+            // agar bgnya berjalan
+            var bg = document.getElementById("board");
+            bg.style.backgroundPosition = parseInt(bg.style.backgroundPosition.replace("px", "")) - 1 + "px";
+            // penambahan score
+            document.getElementById("score").innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
+
+            // panggil fungsi terus menerus (recursive)
+            setBackgroundMoving();
+
+            // var scor = getHighScore();
+            // var tempatFound = tempat.find(itm =>itm.score == scor)
+
+            // if (tempatFound) {
+
+
+            // }
+          }, 3);
+        }
+      }
+      // panggil fungsi
+      setBackgroundMoving();
+
+      // var nyawa = 3;
+      // var dinoStatus = "mid";
+
+      function setBoxMoving() {
+        var box = document.getElementById("box"),
+          box1 = document.getElementById("box1"),
+          box2 = document.getElementById("box2"),
+          dino = document.getElementById("dino"),
+          kalah = document.getElementById("kalah");
+        setTimeout(function () {
+          // box atas
+          box.style.marginLeft = parseInt(box.style.marginLeft.replace("px", "")) - 1 + "px";
+
+          // if (parseInt(box.style.marginLeft.replace("px", "")) == 120) {
+            // if (dinoStatus == "up") {
+            //   nyawa = nyawa - 1;
+            //box.style.marginLeft = "600px";
+            // }
+          // }
+
+          if (parseInt(box.style.marginLeft.replace("px", "")) < -100) {
+            box.style.marginLeft = "600px";
+          }
+
+          //   box tengah
+          box1.style.marginLeft = parseInt(box1.style.marginLeft.replace("px", "")) - 1 + "px";
+          if (parseInt(box1.style.marginLeft.replace("px", "")) < -100) {
+            box1.style.marginLeft = "1000px";
+          }
+
+          //   box bawah
+          box2.style.marginLeft = parseInt(box2.style.marginLeft.replace("px", "")) - 1 + "px";
+          if (parseInt(box2.style.marginLeft.replace("px", "")) < -100) {
+            box2.style.marginLeft = "1600px";
+          }
+
+          //   if (dino.offsetTop + 50 >= box.offsetTop && dino.offsetLeft + 50 >= box.offsetLeft && dino.offsetTop + 50 <= box.offsetTop + 50 && dino.offsetLeft <= box.offsetLeft + 50) {
+          if (dino.offsetLeft >= box2.offsetLeft && dino.offsetLeft >= box.offsetLeft && dino.offsetLeft >= box1.offsetLeft) {
+            kalah.style.display = "block";
+            document.getElementById("highscore").innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
+            dino.setAttribute("class", "freeze");
+            if (parseInt(document.getElementById("score").innerHTML) + 1 > localStorage.getItem("highest_score")) {
+              localStorage.setItem("highest_score", parseInt(document.getElementById("score").innerHTML) + 1);
+              document.getElementById("highest_scoree").innerHTML = localStorage.getItem("highest_score");
+            }
+
+            isMoving = false;
+          } else {
+            // panggil fungsi terus menerus (recursive)
+            setBoxMoving();
+          }
+        }, 3);
+      }
+      setBoxMoving();
+
+      var dino = document.getElementById("dino");
+      //   var down = parseInt(dino.style.marginTop("px", ""));
+      window.addEventListener("keydown", function (e) {
+        if (e.keyCode == 38) {
+          // if (dinoStatus != "up") {
+          //   dino.style.top = parseInt(dino.style.top.replace("px", "")) - 15 + "px";
+          dino.style.marginTop = "118px";
+          //   dinoStatus;
+          // }
+        }
+
+        if (e.keyCode == 40) {
+          dino.style.marginTop = "150px";
+        }
+      });
+
+      //   window.addEventListener("keydown", function (e) {
+      //     // untuk mendeteksi spasi
+      //     if (e.keyCode == 32 && isMoving && !isJumping) {
+      //       isJumping = true;
+      //       // dino loncat
+      //       document.getElementById("dino").style.marginTop = "60px";
+      //       // dino freeze
+      //       document.getElementById("dino").setAttribute("class", "freeze");
+      //       setTimeout(function () {
+      //         document.getElementById("dino").style.marginTop = "170px";
+      //         document.getElementById("dino").setAttribute("class", "");
+      //       }, 400);
+      //       isJumping = false;
+      //     }
+      //   });
+    </script>
+  </body>
+</html>
