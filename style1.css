@@ -108,7 +108,7 @@ h2 {
     background: url("images/run1.png");
     background-size: 100% 100%;
     position: absolute;
-    margin-top: 150px;
+    margin-top: 118px;
     margin-left: 50px;
     animation: lari 0.7s infinite;
     transition: 0.5s;
