@@ -79,8 +79,9 @@
       setBackgroundMoving();
 
       // var nyawa = 3;
-      // var dinoStatus = "mid";
+      
 
+      // var dinoStatus = mid;
       function setBoxMoving() {
         var box = document.getElementById("box"),
           box1 = document.getElementById("box1"),
@@ -90,17 +91,15 @@
         setTimeout(function () {
           // box atas
           box.style.marginLeft = parseInt(box.style.marginLeft.replace("px", "")) - 1 + "px";
-
+          if (parseInt(box.style.marginLeft.replace("px", "")) < -100) {
+            box.style.marginLeft = "600px";
+          }
           // if (parseInt(box.style.marginLeft.replace("px", "")) == 120) {
             // if (dinoStatus == "up") {
             //   nyawa = nyawa - 1;
             //box.style.marginLeft = "600px";
             // }
           // }
-
-          if (parseInt(box.style.marginLeft.replace("px", "")) < -100) {
-            box.style.marginLeft = "600px";
-          }
 
           //   box tengah
           box1.style.marginLeft = parseInt(box1.style.marginLeft.replace("px", "")) - 1 + "px";
@@ -115,39 +114,63 @@
           }
 
           //   if (dino.offsetTop + 50 >= box.offsetTop && dino.offsetLeft + 50 >= box.offsetLeft && dino.offsetTop + 50 <= box.offsetTop + 50 && dino.offsetLeft <= box.offsetLeft + 50) {
-          if (dino.offsetLeft >= box2.offsetLeft && dino.offsetLeft >= box.offsetLeft && dino.offsetLeft >= box1.offsetLeft) {
-            kalah.style.display = "block";
-            document.getElementById("highscore").innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
-            dino.setAttribute("class", "freeze");
-            if (parseInt(document.getElementById("score").innerHTML) + 1 > localStorage.getItem("highest_score")) {
-              localStorage.setItem("highest_score", parseInt(document.getElementById("score").innerHTML) + 1);
-              document.getElementById("highest_scoree").innerHTML = localStorage.getItem("highest_score");
-            }
+          // if (dino.offsetLeft >= box2.offsetLeft && dino.offsetLeft >= box.offsetLeft && dino.offsetLeft >= box1.offsetLeft) {
+          //   kalah.style.display = "block";
+          //   document.getElementById("highscore").innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
+          //   dino.setAttribute("class", "freeze");
+          //   if (parseInt(document.getElementById("score").innerHTML) + 1 > localStorage.getItem("highest_score")) {
+          //     localStorage.setItem("highest_score", parseInt(document.getElementById("score").innerHTML) + 1);
+          //     document.getElementById("highest_scoree").innerHTML = localStorage.getItem("highest_score");
+          //   }
 
-            isMoving = false;
-          } else {
-            // panggil fungsi terus menerus (recursive)
-            setBoxMoving();
-          }
+          //   isMoving = false;
+          // } else {
+          //   // panggil fungsi terus menerus (recursive)
+          setBoxMoving();
+          // }
         }, 3);
       }
       setBoxMoving();
 
       var dino = document.getElementById("dino");
+      var style = getComputedStyle(dino);
+      var dinoStatus = "mid";
+      
+
       //   var down = parseInt(dino.style.marginTop("px", ""));
       window.addEventListener("keydown", function (e) {
+        function setDinoUp(){
+          const topp = parseInt(style.marginTop.replace("px", ""));
+          dino.style.marginTop = topp - 32 + "px";
+        }
+        function setDinoDown(){
+          const topp = parseInt(style.marginTop.replace("px", ""));
+          dino.style.marginTop = topp + 32 + "px";
+        }
         if (e.keyCode == 38) {
-          // if (dinoStatus != "up") {
+          setDinoUp();
+          if (parseInt(dino.style.marginTop) < 86) {
+            
+          }
+          //   !setDinoUp();
           //   dino.style.top = parseInt(dino.style.top.replace("px", "")) - 15 + "px";
-          dino.style.marginTop = "118px";
+          // dino.style.marginTop = "118px";
           //   dinoStatus;
-          // }
+          //}
         }
 
         if (e.keyCode == 40) {
-          dino.style.marginTop = "150px";
+          setDinoDown();
+          // dino.style.marginTop = "150px";
+          // if (dinoStatus == bot){
+          //   !setDinoDown();
+          // }
         }
+      
       });
+  
+
+      
 
       //   window.addEventListener("keydown", function (e) {
       //     // untuk mendeteksi spasi
