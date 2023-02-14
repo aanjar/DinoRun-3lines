@@ -19,6 +19,7 @@
           <span id="highest_scoree"></span>
         </h3>
         <div id="dino"></div>
+        <!-- <div id="bulat"></div> -->
         <div id="kalah" class="kalah">
           <div class="kalah2">
             <p style="font-size: 30px; font-weight: bold; margin-top: -3px; padding: 0px">Game Over</p>
@@ -33,16 +34,16 @@
     </div>
 
     <script type="text/javascript">
-       var tempat = [
+      var tempat = [
         {
           score: 20000,
-          img: "https://"
+          img: "https://",
         },
         {
           score: 30000,
-          img: "https://"
-        }
-      ]; 
+          img: "https://",
+        },
+      ];
 
       var isMoving = true;
       function setHighScore() {
@@ -70,7 +71,6 @@
 
             // if (tempatFound) {
 
-
             // }
           }, 3);
         }
@@ -79,7 +79,16 @@
       setBackgroundMoving();
 
       // var nyawa = 3;
-      
+
+      function kalah() {
+        kalah.style.display = "block";
+        document.getElementById("highscore").innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
+        dino.setAttribute("class", "freeze");
+        if (parseInt(document.getElementById("score").innerHTML) + 1 > localStorage.getItem("highest_score")) {
+          localStorage.setItem("highest_score", parseInt(document.getElementById("score").innerHTML) + 1);
+          document.getElementById("highest_scoree").innerHTML = localStorage.getItem("highest_score");
+        }
+      }
 
       // var dinoStatus = mid;
       function setBoxMoving() {
@@ -95,10 +104,10 @@
             box.style.marginLeft = "600px";
           }
           // if (parseInt(box.style.marginLeft.replace("px", "")) == 120) {
-            // if (dinoStatus == "up") {
-            //   nyawa = nyawa - 1;
-            //box.style.marginLeft = "600px";
-            // }
+          // if (dinoStatus == "up") {
+          //   nyawa = nyawa - 1;
+          //box.style.marginLeft = "600px";
+          // }
           // }
 
           //   box tengah
@@ -113,80 +122,83 @@
             box2.style.marginLeft = "1600px";
           }
 
-          //   if (dino.offsetTop + 50 >= box.offsetTop && dino.offsetLeft + 50 >= box.offsetLeft && dino.offsetTop + 50 <= box.offsetTop + 50 && dino.offsetLeft <= box.offsetLeft + 50) {
-          // if (dino.offsetLeft >= box2.offsetLeft && dino.offsetLeft >= box.offsetLeft && dino.offsetLeft >= box1.offsetLeft) {
-          //   kalah.style.display = "block";
-          //   document.getElementById("highscore").innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
-          //   dino.setAttribute("class", "freeze");
-          //   if (parseInt(document.getElementById("score").innerHTML) + 1 > localStorage.getItem("highest_score")) {
-          //     localStorage.setItem("highest_score", parseInt(document.getElementById("score").innerHTML) + 1);
-          //     document.getElementById("highest_scoree").innerHTML = localStorage.getItem("highest_score");
-          //   }
-
-          //   isMoving = false;
-          // } else {
-          //   // panggil fungsi terus menerus (recursive)
+          //if (bulat.offsetLeft == box.offsetLeft - 15 && bulat.offsetLeft >= box1.offsetLeft && bulat.offsetLeft >= box2.offsetLeft) {
+            //  if (dino.offsetTop + 50 >= box.offsetTop && dino.offsetLeft + 50 >= box.offsetLeft && dino.offsetTop + 50 <= box.offsetTop + 50 && dino.offsetLeft <= box.offsetLeft + 50) {
+            // if (dino.offsetLeft >= box2.offsetLeft && dino.offsetLeft >= box.offsetLeft && dino.offsetLeft >= box1.offsetLeft) {
+            // kalah.style.display = "block";
+            // document.getElementById("highscore").innerHTML = parseInt(document.getElementById("score").innerHTML) + 1;
+            // dino.setAttribute("class", "freeze");
+            // if (parseInt(document.getElementById("score").innerHTML) + 1 > localStorage.getItem("highest_score")) {
+            //   localStorage.setItem("highest_score", parseInt(document.getElementById("score").innerHTML) + 1);
+            //   document.getElementById("highest_scoree").innerHTML = localStorage.getItem("highest_score");
+            // }
+            //console.log("lebih");
+            //    isMoving = false;
+          //}
+          //else {
+          // panggil fungsi terus menerus (recursive)
           setBoxMoving();
-          // }
+          //}
         }, 3);
       }
       setBoxMoving();
 
       var dino = document.getElementById("dino");
+      // var bulat = document.getElementById("bulat");
       var style = getComputedStyle(dino);
-      var dinoStatus = "mid";
-      
+      var changeLaneUp = true;
+      var changeLaneDown = true;
+      var dinoStatus;
 
-      //   var down = parseInt(dino.style.marginTop("px", ""));
-      window.addEventListener("keydown", function (e) {
-        function setDinoUp(){
-          const topp = parseInt(style.marginTop.replace("px", ""));
-          dino.style.marginTop = topp - 32 + "px";
+      window.addEventListener("keyup", function (e) {
+        function setDinoUp() {
+          if (changeLaneUp == true) {
+            const topp = parseInt(style.marginTop.replace("px", ""));
+            dino.style.marginTop = topp - 32 + "px";
+          }
+          if (parseInt(dino.style.marginTop) < 90) {
+            changeLaneUp = false;
+             if (changeLaneUp == false) {
+              dinoStatus = true;
+             }
+          } else {
+            const topp = parseInt(style.marginTop.replace("px", ""));
+            dino.style.marginTop = topp - 32 + "px";
+            changeLaneUp = true;
+          }
         }
-        function setDinoDown(){
-          const topp = parseInt(style.marginTop.replace("px", ""));
-          dino.style.marginTop = topp + 32 + "px";
+
+        function setDinoDown() {
+          if (changeLaneDown == true) {
+            const topp = parseInt(style.marginTop.replace("px", ""));
+            dino.style.marginTop = topp + 32 + "px";
+          }
+          if (parseInt(dino.style.marginTop) > 148) {
+            dinoStatus = "bot";
+            changeLaneDown = false;
+          } else {
+            const topp = parseInt(style.marginTop.replace("px", ""));
+            dino.style.marginTop = topp + 32 + "px";
+            changeLaneDown = true;
+          }
         }
         if (e.keyCode == 38) {
           setDinoUp();
-          if (parseInt(dino.style.marginTop) < 86) {
-            
-          }
-          //   !setDinoUp();
-          //   dino.style.top = parseInt(dino.style.top.replace("px", "")) - 15 + "px";
-          // dino.style.marginTop = "118px";
-          //   dinoStatus;
-          //}
         }
 
         if (e.keyCode == 40) {
           setDinoDown();
-          // dino.style.marginTop = "150px";
-          // if (dinoStatus == bot){
-          //   !setDinoDown();
-          // }
         }
-      
       });
-  
 
-      
-
-      //   window.addEventListener("keydown", function (e) {
-      //     // untuk mendeteksi spasi
-      //     if (e.keyCode == 32 && isMoving && !isJumping) {
-      //       isJumping = true;
-      //       // dino loncat
-      //       document.getElementById("dino").style.marginTop = "60px";
-      //       // dino freeze
-      //       document.getElementById("dino").setAttribute("class", "freeze");
-      //       setTimeout(function () {
-      //         document.getElementById("dino").style.marginTop = "170px";
-      //         document.getElementById("dino").setAttribute("class", "");
-      //       }, 400);
-      //       isJumping = false;
-      //     }
-      //   });
+      // var box = document.getElementById("box"),
+      //     box1 = document.getElementById("box1"),
+      //     box2 = document.getElementById("box2");
+      //     const sty = getComputedStyle(box1)
+      // const mrg = parseInt(box.marginLeft.replace("px", ""));
+      // if (box.style.marginLeft == 100){
+      //   console.log('top')
+      // }
     </script>
   </body>
 </html>
