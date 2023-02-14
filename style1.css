@@ -101,22 +101,32 @@ h2 {
       background-size: 100% 100%;
     }
   }
+
+  #bulat {
+    height: 20px;
+    width: 20px;
+    background-color: blue;
+    position: absolute;
+    margin-top: 180px;
+    margin-left: 88px;
+    transition: 0.5s;
+  }
   
   #dino {
     width: 100px;
     height: 100px;
-    background: url("images/run1.png");
+    background: url("images/amogus.gif");
     background-size: 100% 100%;
     position: absolute;
-    margin-top: 118px;
+    margin-top: 120px;
     margin-left: 50px;
-    animation: lari 0.7s infinite;
+    /* animation: lari 0.7s infinite; */
     transition: 0.5s;
   }
   
   #dino.freeze {
     animation: none;
-    background: url("images/run8.png");
+    background: url("images/amogus.png");
     background-size: 100% 100%;
   }
   
@@ -127,6 +137,7 @@ h2 {
     background: url("images/redbox.png");
     background-size: 100% 100%;
     margin-left: 600px;
+    
   }
 
   #box1 {
